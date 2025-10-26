@@ -1,0 +1,90 @@
+<!DOCTYPE html> 
+<html lang="en"> 
+<head> 
+  <meta charset="UTF-8"> 
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+  <title>File Upload Manager</title> 
+  <link rel="stylesheet" href="style.css"> 
+</head> 
+<body> 
+  <div class="upload-container"> 
+    <h1>📁 File Upload Manager</h1> 
+    <form id="uploadForm" enctype="multipart/form-data"> 
+      <input type="file" name="files" id="fileInput" multiple> 
+      <button type="submit" class="upload-btn">Upload Files</button> 
+    </form> 
+    <div id="status"></div> 
+  </div> 
+ 
+  <script> 
+    const form = document.getElementById('uploadForm'); 
+    const statusDiv = document.getElementById('status'); 
+ 
+    form.addEventListener('submit', async (e) => { 
+      e.preventDefault(); 
+      const formData = new FormData(form); 
+      statusDiv.innerHTML = 'Uploading...'; 
+      const res = await fetch('/upload', { 
+        method: 'POST', 
+        body: formData 
+      }); 
+      const text = await res.text(); 
+      statusDiv.innerHTML = text; 
+    }); 
+  </script> 
+</body> 
+</html> 
+ 
+ 
+  
+ 
+ 
+ 
+body { 
+  font-family: Arial, sans-serif; 
+  background: #f4f6f8; 
+  margin: 0; 
+  padding: 0; 
+  display: flex; 
+  justify-content: center; 
+  align-items: center; 
+  height: 100vh; 
+} 
+ 
+.upload-container { 
+  background: white; 
+  border-radius: 10px; 
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.1); 
+  padding: 30px; 
+  width: 400px; 
+  text-align: center; 
+} 
+ 
+h1 { 
+  color: #333; 
+} 
+ 
+input[type="file"] { 
+  display: block; 
+  margin: 20px auto; 
+} 
+ 
+.upload-btn { 
+  background: #007bff; 
+  color: white; 
+  padding: 10px 20px; 
+  border: none; 
+  border-radius: 6px; 
+  cursor: pointer; 
+} 
+ 
+.upload-btn:hover { 
+  background: #0056b3; 
+} 
+ 
+#status { 
+  margin-top: 15px; 
+  color: green; 
+} 
+ 
+ 
